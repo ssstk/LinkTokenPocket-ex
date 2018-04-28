@@ -1,0 +1,77 @@
+/**{
+    margin: 0;
+    padding: 0;
+}*/
+#app{
+    width: 480px;
+    overflow: hidden;
+    position: relative;
+}
+
+#app .header{
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    background-color: #879FA0;
+    background: -moz-linear-gradient(left, #4FC08D 0, #086CAF 100%);
+    background: -webkit-linear-gradient(left, #4FC08D 0, #086CAF 100%);
+    background: -o-linear-gradient(left, #4FC08D 0, #086CAF 100%);
+    background: -ms-linear-gradient(left, #4FC08D 0, #086CAF 100%);
+    background: linear-gradient(to left, #4FC08D 0, #086CAF 100%);
+}
+.ub {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.ub-f1 {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1
+}
+
+.flex-end {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end
+}
+
+.align-items {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.justify-content {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+.flex-column {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column
+}
+.flex-wrap {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+}
+.nowrap {
+    white-space: nowrap
+}
+.normal {
+    word-wrap: break-word;
+    word-break: normal
+}
+
+.code-img{
+  background-image: url(../img/code.png);
+  width: 120px;
+  height: 120px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}

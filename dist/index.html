@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="style.css" rel="stylesheet"></head>
+
+<body>
+  <div id="app">
+    <div class="header">链克助手</div>
+    <div class="tabs ub justify-content flex-column align-items">
+      <Card style="width:320px;margin-bottom: 30px;">
+        <div style="text-align:center;height: 50px;line-height: 50px;" @click="opentab('1')">
+          <h3>链克转账</h3>
+        </div>
+      </Card>
+      <Card style="width:320px;margin-bottom: 60px;">
+        <div style="text-align:center;height: 50px;line-height: 50px;" @click="opentab('2')">
+          <h3>链克查询</h3>
+        </div>
+      </Card>
+      <div style="text-align:center;">
+        <h3 class="marb10"><a href="https://github.com/ssstk/LinkTokenPocket-ex.git">githun 源码地址</a></h3>
+        <h3 class="marb10"><a href="https://github.com/ssstk/freess">ss,ssr免费账号分享  解决封IP 问题</a></h3>
+        <h2>大爷好用就打赏一下 😄</h2>
+        <div class="ub justify-content flex-column align-items">
+          <div class="code-img"></div>
+        </div>
+        <h3>链克钱包地址：0x5baff36f8a9205d6aac876c62025bb8b2dc3c785</h3>
+        </div>
+    </div>
+    <transition name="sider-fade">
+      <div class="content sidebar-content" v-show="searchOpen === '1'">
+        <div>
+          <div class="close-btn" @click="opentab">
+            <Icon type="ios-close-outline" size='24'></Icon>
+          </div>
+          <div style="text-align:center;padding-top: 20px;">
+            <h2>链克钱包转账工具</h2>
+            <p>源码开源，保证钱包安全</p>
+            <p>因IP限制，可能需要代理才能正常完成转账</p>
+          </div>
+          <div class="marb10">
+            <div class="marb10">
+              <h3>钱包文件</h3>
+            </div>
+            <div class="example-case">
+              <div class="ivu-upload" @click="handleClick">
+                <div class="ivu-upload ivu-upload-drag">
+                  <input type="file" multiple="multiple" class="ivu-upload-input" ref="input" @change="handleChange">
+                  <div style="padding: 20px 0px;"><i class="ivu-icon ivu-icon-ios-cloud-upload" style="font-size: 52px; color: rgb(51, 153, 255);"></i>
+                    <p v-if="transferaddress">钱包地址 {{transferaddress}}</p>
+                    <p v-else>点击此处上传钱包文件</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="marb10">
+            <div class="marb10">
+              <h3>钱包密码</h3></div>
+            <i-input class="ub-f1 mar10" v-model="transfer.password" placeholder="输入钱包密码"></i-input>
+          </div>
+          <div class="marb10">
+            <div class="marb10">
+              <h3>收款账户</h3></div>
+            <i-input class="ub-f1 mar10" v-model="transfer.to_address" placeholder="输入收款账户"></i-input>
+          </div>
+          <div class="marb20">
+            <div class="marb10">
+              <h3>转账链克</h3></div>
+            <i-input class="ub-f1 mar10" v-model="transfer.value" placeholder="输入转账链克数量"></i-input>
+          </div>
+          <div>
+            <i-button type="primary" :loading="loading" @click="sendRawTransaction" long>
+              <span v-if="!loading">发送链克</span>
+              <span v-else>请求中，请稍后...</span>
+            </i-button>
+          </div>
+        </div>
+      </div>
+    </transition>
+    <transition name="sider-fade">
+      <div class="content sidebar-content" v-show="searchOpen === '2'">
+        <div class="close-btn" @click="opentab">
+          <Icon type="ios-close-outline" size='24'></Icon>
+        </div>
+        <div style="text-align:center;padding-top: 20px;margin-bottom: 20px;">
+          <h2>链克余额交易查询</h2>
+          <p>源码开源，保证钱包安全</p>
+        </div>
+        <div class="ub">
+          <i-input class="ub-f1 mar10" v-model="address" placeholder="输入钱包地址"></i-input>
+          <i-button type="primary" @click="getBalance">提交查询</i-button>
+        </div>
+        <div class="jsq ub align-items">
+          <div class="balance">余额: {{balance}}</div>
+          <div class="count">转出次数: {{transactionCount}}</div>
+        </div>
+        <div class="">
+          <div class="table-tit">最近交易明细</div>
+          <i-table :columns="columns" :data="data"></i-table>
+        </div>
+      </div>
+    </transition>
+  </div>
+<script type="text/javascript" src="bundle.js"></script></body>
+<style>
+#app {
+  min-height: 600px;
+}
+
+.marb10 {
+  margin-bottom: 10px;
+}
+
+.marb20 {
+  margin-bottom: 20px;
+}
+
+.jsq {
+  height: 50px;
+  height: 32px;
+  border: 1px solid #dddee1;
+  ;
+  margin: 10px 0;
+  padding: 0 6px;
+}
+
+.balance {
+  font-size: 14px;
+  color: #669900;
+  margin-right: 15px;
+}
+
+.tabs {
+  padding: 30px 0;
+}
+
+.table-tit {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.count {
+  font-size: 14px;
+  color: #0066FF;
+}
+
+.mar10 {
+  margin-right: 10px;
+}
+
+.sidebar-content {
+  padding: 0 20px 20px;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  bottom: 0;
+  background-color: #fff;
+  overflow-y: auto;
+  transition: all 0.2s ease-in-out;
+}
+
+.sider-fade-enter-active {
+  transform: translate(0, 0);
+}
+
+.sider-fade-leave-active {
+  transform: translate(0, 0);
+}
+
+.sider-fade-enter,
+.sider-fade-leave-to {
+  transform: translate(100%, 0);
+}
+
+.close-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+</style>
+
+</html>

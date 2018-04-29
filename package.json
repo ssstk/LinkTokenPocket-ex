@@ -1,7 +1,8 @@
 {
   "name": "trainname",
   "version": "1.0.0",
-  "description": "",
+  "description": "开源链克口袋，链克转账记录查询， 余额查询，链克交易,Chrome扩展程序",
+  "author": "sstizim@gmail.com",
   "main": "index.js",
   "scripts": {
     "build": "webpack -p",

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "MyLinkToken",
-    "description": "开源链克口袋，MyLinkToken",
+    "name": "LinkTokenPocket",
+    "description": "开源链克口袋，链克转账记录查询， 余额查询，链克交易,Chrome扩展程序",
     "icons":
     {
         "16": "images/logo16.png",
@@ -13,7 +13,7 @@
     "version": "0.1",
     "browser_action": {
         "default_icon": "images/logo.png",
-        "default_title": "开源链克口袋，MyLinkToken",
+        "default_title": "链克口袋，LinkToken",
         "default_popup": "index.html"
     },
     "permissions": [

@@ -17,6 +17,12 @@ LinkTokenPocket-ex 是一款迅雷玩客币（链克）查询和账户操作的�
 
 ## 截图
 
+<p style="display: -webkit-box;display: flex;">
+    <img src="./screenshot/1.png">
+    <img src="./screenshot/1.png">
+    <img src="./screenshot/1.png">
+</p>
+
 ![](./screenshot/1.png)       ![](./screenshot/2.png)      ![](./screenshot/3.png) 
 
 ## 如何开发

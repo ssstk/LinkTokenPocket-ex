@@ -10,7 +10,10 @@
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     
-    "version": "0.1",
+
+    "options_page": "options.html",
+    
+    "version": "0.2",
     "browser_action": {
         "default_icon": "images/logo.png",
         "default_title": "链克口袋，LinkToken",

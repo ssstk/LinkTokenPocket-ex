@@ -80,36 +80,57 @@ export function getTransactionRecords(address) {
 export function sendRawTransaction(params) {
   const keystore = params.walletaddress
   const password = params.password
+  const to_address = params.to_address
+
+  
+
   try {
     const wallet_new = Wallet.fromV3(keystore, password)
     const address = `0x${wallet_new.getAddress().toString('hex')}`;
-    const txParams = {
-      from: address,
-      to: address,
-      value: web3.utils.toHex(web3.utils.toWei(params.value)),
-      gasLimit: '0x186a0',
-      gasPrice: '0x174876e800',
-      nonce: '0x0',
-    };
-    const tx = new EthereumTx(txParams)
-    tx.sign(wallet_new.getPrivateKey())
-    const serializedTx = tx.serialize();
-
-    const raw = `0x${serializedTx.toString('hex')}`;
 
     return axios({
       method: 'POST',
-      headers: { 'content-type': 'application/json', "Nc": "IN" },
-      data: JSON.stringify({
+      headers: { 'content-type': 'application/json' },
+      data: {
         "jsonrpc": "2.0",
-        "method": "eth_sendRawTransaction",
-        "params": [raw],
+        "method": "eth_getTransactionCount",
+        "params": [address, "pending"],
         "id": 1
-      }),
-      url: url + '/sendRawTransaction'
+      },
+      url: url + '/getTransactionCount'
     }).then(res => {
-      return Promise.resolve(res.data)
+      const txParams = {
+        from: address,
+        to: to_address,
+        value: web3.utils.toHex(web3.utils.toWei(params.value)),
+        gasLimit: '0x186a0',
+        gasPrice: '0x174876e800', 
+        nonce: res.data.result,
+      };
+      const tx = new EthereumTx(txParams)
+      tx.sign(wallet_new.getPrivateKey())
+
+      const serializedTx = tx.serialize()
+
+      const raw = `0x${serializedTx.toString('hex')}`
+
+      return axios({
+        method: 'POST',
+        headers: { 'content-type': 'application/json', "Nc": "IN" },
+        data: JSON.stringify({
+          "jsonrpc": "2.0",
+          "method": "eth_sendRawTransaction",
+          "params": [raw],
+          "id": 1
+        }),
+        url: url + '/sendRawTransaction'
+      }).then(res => {
+        return Promise.resolve(res.data)
+      })
+
+
     })
+
   } catch (err) {
     let result = {
       error: {

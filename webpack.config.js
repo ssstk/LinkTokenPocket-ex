@@ -62,6 +62,11 @@ module.exports = {
           template: 'index.html',
           inject: true
         }),
+        new HtmlWebpackPlugin({  // Also generate a test.html
+              filename: 'options.html',
+              template: 'options.html'
+            }),
+
         new CopyWebpackPlugin([{
           from: resolve('config'),
           to: resolve('dist'),

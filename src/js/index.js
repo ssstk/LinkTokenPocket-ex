@@ -8,12 +8,14 @@ Vue.use(iView)
 import { getBalance, getTransactionCount, sendRawTransaction, getTransactionRecords } from '@/api/walletapi'
 import { errorCode } from '@/api/site'
 
-import { Upload } from 'iview'
+import { Modal } from 'iview'
 new Vue({
   el: "#app",
   data() {
     return {
       address: '',
+      confirmation: false,
+      amount: null,
       searchOpen: null,
       columns: [{
           title: '时间',
@@ -56,7 +58,32 @@ new Vue({
       })
       reader.readAsText(postFiles[0], "UTF-8")
     },
-
+    confirmationfn(){
+      if(!/^0[xX][a-fA-F0-9]{40}$/.test(this.transferaddress)){
+          this.$Message.error('钱包地址不正确！')
+          return
+      }
+      if(!this.transfer.password){
+          this.$Message.error('钱包密码不能为空！')
+          return
+      }
+      if(!/^0[xX][a-fA-F0-9]{40}$/.test(this.transfer.to_address)){
+          this.$Message.error('收款账户不正确！')
+          return
+      }
+      if(!this.transfer.value){
+          this.$Message.error('转账链克不能为空！')
+          return
+      }
+      this.amount = this.add(this.transfer.value, 0.01)
+      this.confirmation = true
+    },
+    add(num1, num2) {
+      const num1Digits = (num1.toString().split('.')[1] || '').length;
+      const num2Digits = (num2.toString().split('.')[1] || '').length;
+      const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
+      return (num1 * baseNum + num2 * baseNum) / baseNum;
+    },
     sendRawTransaction() {
       let params = this.transfer
       this.loading = true
@@ -114,7 +141,7 @@ new Vue({
     })
   },
   components: {
-    Upload
+    Modal
   }
 
 })

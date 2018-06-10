@@ -13,7 +13,7 @@
 
     "options_page": "options.html",
 
-    "version": "0.2.2",
+    "version": "0.2.3",
     "browser_action": {
         "default_icon": "images/logo.png",
         "default_title": "链克口袋，LinkToken",

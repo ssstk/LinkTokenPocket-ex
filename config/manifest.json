@@ -9,11 +9,11 @@
         "128": "images/logo128.png"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    
+
 
     "options_page": "options.html",
-    
-    "version": "0.2.1",
+
+    "version": "0.2.2",
     "browser_action": {
         "default_icon": "images/logo.png",
         "default_title": "链克口袋，LinkToken",
